@@ -1,17 +1,17 @@
 package clueGame;
 
 public class Card {
-	private String name;
+	private String myName;
 	private CardType type;
 
 	public Card(String name, CardType type) {
 		super();
-		this.name = name;
+		this.myName = name;
 		this.type = type;
 	}
 	public Card() {}
 	public String getName() {
-		return name;
+		return myName;
 	}
 	public CardType getType() {
 		return type;
@@ -25,10 +25,10 @@ public class Card {
 		if (getClass() != obj.getClass())
 			return false;
 		Card other = (Card) obj;
-		if (name == null) {
-			if (other.name != null)
+		if (myName == null) {
+			if (other.myName != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!myName.equals(other.myName))
 			return false;
 		if (type != other.type)
 			return false;
