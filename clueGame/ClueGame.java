@@ -26,7 +26,7 @@ public class ClueGame extends JFrame {
 	private int countWeap=0;
 	private int countPlay=0;
 	private int countRoom=0;
-	private Solutions solu;
+	private Solution solu;
 
 	public ClueGame() throws FileNotFoundException{
 		deck = new ArrayList<Card>();
@@ -90,7 +90,7 @@ public class ClueGame extends JFrame {
 		Card pers2 = deck.get(person);
 		Card weap2 = deck.get(weap);
 		Card room2 = deck.get(room);
-		solu = new Solutions( room2.getName(),pers2.getName() ,weap2.getName());
+		solu = new Solution( room2.getName(),pers2.getName() ,weap2.getName());
 		deck.remove(weap2);
 		deck.remove(pers2);
 		deck.remove(room2);
@@ -165,11 +165,11 @@ public class ClueGame extends JFrame {
 		return c;
 
 	}
-	public boolean checkAccusation(Solutions accusation){
+	public boolean checkAccusation(Solution accusation){
 		return accusation.equals(solu);
 	}
 
-	public void setSolu(Solutions solu) {
+	public void setSolu(Solution solu) {
 		this.solu = solu;
 	}
 

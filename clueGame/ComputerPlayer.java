@@ -38,7 +38,7 @@ public class ComputerPlayer extends Player {
 	public void setLastRoomVisited(char lastRoomVisited) {
 		this.lastRoomVisited = lastRoomVisited;
 	}
-	public Solutions createdSuggestion(ArrayList<Card> deck, ArrayList<Card> seen, Map<Character,String> key){
+	public Solution createdSuggestion(ArrayList<Card> deck, ArrayList<Card> seen, Map<Character,String> key){
 		String accusedName="";
 		String accusedWeap="";
 		String accusedRoom=key.get(startingPosition.getType());
@@ -56,7 +56,7 @@ public class ComputerPlayer extends Player {
 		Random rn = new Random();
 		accusedName = playerChoices.get( Math.abs( rn.nextInt() ) % playerChoices.size() ).getName();
 		accusedWeap = weapChoices.get( Math.abs( rn.nextInt() ) % weapChoices.size() ).getName();
-		return new Solutions( accusedRoom,accusedName ,accusedWeap);
+		return new Solution( accusedRoom,accusedName ,accusedWeap);
 
 	}
 	public void updateSeen(Card seen){
