@@ -84,16 +84,13 @@ public class ClueGame extends JFrame {
 	public void deal(){
 		long seed = System.nanoTime();
 		Random rn = new Random();
-		int person = Math.abs(rn.nextInt())%6+9;
-		int weap = Math.abs(rn.nextInt())%6 +15;
-		int room = Math.abs(rn.nextInt())%9;
-		Card pers2 = deck.get(person);
-		Card weap2 = deck.get(weap);
-		Card room2 = deck.get(room);
-		solu = new Solution( room2.getName(),pers2.getName() ,weap2.getName());
-		deck.remove(weap2);
-		deck.remove(pers2);
-		deck.remove(room2);
+		Card pers = deck.get(Math.abs(rn.nextInt())%6+9);
+		Card weap = deck.get(Math.abs(rn.nextInt())%6 +15);
+		Card room = deck.get(Math.abs(rn.nextInt())%9);
+		solu = new Solution( room.getName(),pers.getName() ,weap.getName());
+		deck.remove(weap);
+		deck.remove(pers);
+		deck.remove(room);
 		Collections.shuffle(deck, new Random(seed));
 		Collections.shuffle(people, new Random(seed));
 		int track = 0;
@@ -101,9 +98,9 @@ public class ClueGame extends JFrame {
 			people.get(track%6).addToHand(c);
 			track++;
 		}
-		deck.add(weap2);
-		deck.add(pers2);
-		deck.add(room2);
+		deck.add(weap);
+		deck.add(pers);
+		deck.add(room);
 	}
 	public void loadConfigFiles() throws FileNotFoundException{
 		FileReader reader = new FileReader(cardLeg);
