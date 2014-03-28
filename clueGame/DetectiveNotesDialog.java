@@ -38,8 +38,8 @@ public class DetectiveNotesDialog extends JDialog {
 		add(dis4);
 		add(dis5);
 		add(dis6);
-
 	}
+	
 	public static void main(String[] args) throws FileNotFoundException {
 		ClueGame game = new ClueGame();
 		game.deal();
