@@ -67,13 +67,7 @@ public class Player {
 		Random rn = new Random();
 		ArrayList<Card> choices = new ArrayList<Card>();
 		for(Card c: hand){
-			if(c.getName().equals(person)){
-				choices.add(c);
-			}
-			if(c.getName().equals(room)){
-				choices.add(c);
-			}
-			if(c.getName().equals(weapon)){
+			if(c.getName().equals(person) || c.getName().equals(room) || c.getName().equals(weapon)){
 				choices.add(c);
 			}
 		}
