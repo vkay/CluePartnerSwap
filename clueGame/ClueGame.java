@@ -27,6 +27,10 @@ public class ClueGame extends JFrame {
 	private int countPlay=0;
 	private int countRoom=0;
 	private Solution solu;
+	private Random rn;
+	private Card pers;
+	private Card weap;
+	private Card room;
 
 	public ClueGame() throws FileNotFoundException{
 		deck = new ArrayList<Card>();
@@ -84,9 +88,6 @@ public class ClueGame extends JFrame {
 	public void deal(){
 		long seed = System.nanoTime();
 		Random rn = new Random();
-		Card pers = deck.get(Math.abs(rn.nextInt())%6+9);
-		Card weap = deck.get(Math.abs(rn.nextInt())%6 +15);
-		Card room = deck.get(Math.abs(rn.nextInt())%9);
 		solu = new Solution( room.getName(),pers.getName() ,weap.getName());
 		deck.remove(weap);
 		deck.remove(pers);
@@ -98,10 +99,20 @@ public class ClueGame extends JFrame {
 			people.get(track%6).addToHand(c);
 			track++;
 		}
+		addToDeck();
+	}
+	
+	public void addToDeck() {
+		long seed = System.nanoTime();
+		Random rn = new Random();
+		Card pers = deck.get(Math.abs(rn.nextInt())%6+9);
+		Card weap = deck.get(Math.abs(rn.nextInt())%6 +15);
+		Card room = deck.get(Math.abs(rn.nextInt())%9);
 		deck.add(weap);
 		deck.add(pers);
 		deck.add(room);
 	}
+	
 	public void loadConfigFiles() throws FileNotFoundException{
 		FileReader reader = new FileReader(cardLeg);
 		Scanner in = new Scanner(reader);
