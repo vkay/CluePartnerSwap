@@ -150,9 +150,7 @@ public class ClueGame extends JFrame {
 		in2.close();
 
 	}
-	public void selectAnswer(){
-
-	}
+	
 	public Card handleSuggestion(String person, String room, String weapon, Player accusingPerson){
 		int index=0;
 		Card c =null;
