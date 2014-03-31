@@ -325,13 +325,5 @@ public class Board extends JPanel {
 			p.draw(g, this);
 		}
 	}
-	public static void main(String[] args) {
-		Board board = new Board();
-		board.loadConfigFiles();
-		JFrame fram = new JFrame();
-		fram.setSize(800, 800);
-		fram.add(board, BorderLayout.CENTER);
-		fram.setVisible(true);
-	}
 
 }

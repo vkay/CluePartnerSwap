@@ -29,10 +29,4 @@ public class ControlPanel extends JFrame {
 		add(dis, BorderLayout.SOUTH);
 	}
 
-
-	public static void main(String[] args) {
-		ControlPanel panel = new ControlPanel();
-		panel.setVisible(true);
-	}
-
 }

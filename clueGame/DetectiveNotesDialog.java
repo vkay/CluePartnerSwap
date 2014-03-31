@@ -39,13 +39,4 @@ public class DetectiveNotesDialog extends JDialog {
 		add(weaponsCheck);
 		add(weaponsGuess);
 	}
-	
-	public static void main(String[] args) throws FileNotFoundException {
-		ClueGame game = new ClueGame();
-		game.deal();
-		DetectiveNotesDialog panel = new DetectiveNotesDialog(game.getDeck());
-		panel.setVisible(true);
-	}
-
-
 }
