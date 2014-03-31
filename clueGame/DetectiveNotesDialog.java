@@ -26,18 +26,18 @@ public class DetectiveNotesDialog extends JDialog {
 		setTitle("Detective Notes");
 		setSize(400,600);
 		setLayout( new GridLayout(3,2));
-		DetectiveCheckBox dis1 = new DetectiveCheckBox(people, "People");
-		DetectiveNotesGuess dis2 = new DetectiveNotesGuess(people, "Person Guess");
-		DetectiveCheckBox dis3 = new DetectiveCheckBox(rooms, "Rooms");
-		DetectiveNotesGuess dis4 = new DetectiveNotesGuess(rooms, "Room Guess");
-		DetectiveCheckBox dis5 = new DetectiveCheckBox(weapons, "Weapons");
-		DetectiveNotesGuess dis6 = new DetectiveNotesGuess(weapons, "Weapon Guess");
-		add(dis1);
-		add(dis2);
-		add(dis3);
-		add(dis4);
-		add(dis5);
-		add(dis6);
+		DetectiveCheckBox peopleCheck = new DetectiveCheckBox(people, "People");
+		DetectiveNotesGuess peopleGuess = new DetectiveNotesGuess(people, "Person Guess");
+		DetectiveCheckBox roomsCheck = new DetectiveCheckBox(rooms, "Rooms");
+		DetectiveNotesGuess roomsGuess = new DetectiveNotesGuess(rooms, "Room Guess");
+		DetectiveCheckBox weaponsCheck = new DetectiveCheckBox(weapons, "Weapons");
+		DetectiveNotesGuess weaponsGuess = new DetectiveNotesGuess(weapons, "Weapon Guess");
+		add(peopleCheck);
+		add(peopleGuess);
+		add(roomsCheck);
+		add(roomsGuess);
+		add(weaponsCheck);
+		add(weaponsGuess);
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException {
