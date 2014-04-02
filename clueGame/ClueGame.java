@@ -15,9 +15,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class ClueGame extends JFrame {
-	private ArrayList<Player> people;
+	private static ArrayList<Player> people;
 	private ArrayList<Card> deck;
 	private ArrayList<Card> seen;
 	private String cardLeg = "cardLeg";
@@ -46,8 +47,10 @@ public class ClueGame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("ClueGame");
 		add(board, BorderLayout.CENTER);
-		setSize(24*30,24*30);
+		setSize(24*35,24*35);
+		add(new CardDisplay(), BorderLayout.EAST);
 	}
+	
 	private JMenu createFileMenu()
 	{
 	  JMenu menu = new JMenu("File"); 
@@ -202,10 +205,10 @@ public class ClueGame extends JFrame {
 		return countRoom;
 	}
 
-
 	public static void main(String[] args) throws FileNotFoundException {
 		ClueGame game = new ClueGame();
 		game.setVisible(true);
+		JOptionPane.showMessageDialog(new JFrame (), "You are Peacock, press Next Player to begin play.", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 
 	}
 

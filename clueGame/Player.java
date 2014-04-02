@@ -89,6 +89,7 @@ public class Player {
 		int y = startingPosition.getRow()*LENGTH;
 		g.fillOval(x, y,LENGTH ,LENGTH );
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
