@@ -9,13 +9,11 @@ import javax.swing.border.TitledBorder;
 public class DieDisplay extends JPanel {
 
 private JTextField die;
-
-
-	public DieDisplay() {
+	
+	public DieDisplay(Player player) {
 		JLabel roll = new JLabel("Roll");
 		add(roll);
-		die = new JTextField(3);
-		die.setEditable(false);
+		die = new JTextField(player.getRollString(), 3);
 		add(die);
 		setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 

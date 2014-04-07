@@ -13,10 +13,57 @@ public class Player {
 	private int numCards=0;
 	protected ArrayList<Card> hand;
 	public static int LENGTH = 30;
+	private int roll;
 
 	public ArrayList<Card> getHand() {
 		return hand;
 	}
+	
+	/*public void humanTurn() {
+		
+		roll = 1 + (int)(Math.random() * ((6-1) + 1));
+		calcTargets();
+		getTargets();
+		repaint(); //paint targets
+		
+	}*/
+	
+	public int getRoll() {
+		return roll;
+	}
+	
+	public String getRollString() {
+		return Integer.toString(roll);
+	}
+
+	public String getPeople() {
+		for (Card c: hand) {
+			
+			if (c.getType().equals(CardType.PLAYER)) {
+				return c.getName() + "\n";
+			}
+		}
+		return " ";
+	}
+	public String getRooms() {
+		for (Card c: hand) {
+			
+			if (c.getType().equals(CardType.ROOM)) {
+				return c.getName() + "\n";
+			} 
+		}
+		return " ";
+	}
+	public String getWeapons() {
+		for (Card c: hand) {
+			if (c.getType().equals(CardType.WEAPON)) {
+				return c.getName() + "\n";
+			}
+		}
+		return " ";
+	}
+	
+	
 	public void addToHand(Card c){
 		hand.add(c);
 		numCards++;
