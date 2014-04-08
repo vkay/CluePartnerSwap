@@ -55,7 +55,7 @@ public class ClueGame extends JFrame {
 		add(board, BorderLayout.CENTER);
 		setSize(24 * 35, 24 * 35);
 		controlPanel = new ControlPanel(people.get(whoseTurn+1), this);
-		add(new CardDisplay(people.get(5)), BorderLayout.EAST);
+		add(new CardDisplay(people.get(humanPlayerIndex)), BorderLayout.EAST);
 		add(controlPanel, BorderLayout.SOUTH);
 	}
 
@@ -108,10 +108,11 @@ public class ClueGame extends JFrame {
 		deck.remove(pers2);
 		deck.remove(room2);
 		Collections.shuffle(deck, new Random(seed));
-		Collections.shuffle(people, new Random(seed));
+		ArrayList<Player> shuffledPeople = new ArrayList<Player>(people);
+		Collections.shuffle(shuffledPeople, new Random(seed));
 		int track = 0;
 		for (Card c : deck) {
-			people.get(track % 6).addToHand(c);
+			shuffledPeople.get(track % 6).addToHand(c);
 			track++;
 		}
 		deck.add(weap2);
@@ -139,7 +140,7 @@ public class ClueGame extends JFrame {
 		Scanner in2 = new Scanner(reader2);
 		numPlayers = in2.nextInt();
 		humanPlayerIndex = (new Random()).nextInt(numPlayers);
-		for (int count = 1; in2.hasNextLine(); count++) {
+		for (int count = 0; in2.hasNextLine(); count++) {
 			in2.nextLine();
 			
 			String playerName = in2.nextLine();
@@ -154,6 +155,8 @@ public class ClueGame extends JFrame {
 				people.add(new ComputerPlayer(playerName, playerColor, board
 						.getCell(x, y)));
 			}
+			
+			System.out.println(people);
 		}
 		in2.close();
 
@@ -166,8 +169,12 @@ public class ClueGame extends JFrame {
 			} else {
 				whoseTurn++;
 			}
+<<<<<<< HEAD
 			Player play = people.get(whoseTurn);
 			if (play instanceof HumanPlayer) {
+=======
+			if (people.get(whoseTurn) instanceof HumanPlayer) {
+>>>>>>> b3f56a6f3a1272c861bb108c46eaace8b4bd77cf
 				
 			} else {
 				((ComputerPlayer) people.get(whoseTurn)).makeMove(this);
