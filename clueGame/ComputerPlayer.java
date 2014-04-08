@@ -67,6 +67,7 @@ public class ComputerPlayer extends Player {
 	}
 	
 	public void makeMove(ClueGame clueGame) {
+		
 		clueGame.getBoard().calcTargets(currentPosition.getRow(), currentPosition.getCol(), getRoll());
 		setCurrentPosition(pickLocation(clueGame.getBoard().getTargets()));
 		clueGame.getBoard().repaint();

@@ -166,7 +166,8 @@ public class ClueGame extends JFrame {
 			} else {
 				whoseTurn++;
 			}
-			if (whoseTurn == humanPlayerIndex) {
+			Player play = people.get(whoseTurn);
+			if (play instanceof HumanPlayer) {
 				
 			} else {
 				((ComputerPlayer) people.get(whoseTurn)).makeMove(this);
@@ -182,8 +183,7 @@ public class ClueGame extends JFrame {
 		return people.get(whoseTurn).getName();
 	}
 
-	public Card handleSuggestion(String person, String room, String weapon,
-			Player accusingPerson) {
+	public Card handleSuggestion(String person, String room, String weapon, Player accusingPerson) {
 		int index = 0;
 		Card c = null;
 
