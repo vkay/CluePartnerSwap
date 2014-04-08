@@ -18,7 +18,7 @@ public class Player {
 	public ArrayList<Card> getHand() {
 		return hand;
 	}
-	
+
 	/*public void humanTurn() {
 		
 		roll = 1 + (int)(Math.random() * ((6-1) + 1));
@@ -27,43 +27,45 @@ public class Player {
 		repaint(); //paint targets
 		
 	}*/
-	
+
 	public int getRoll() {
 		return roll;
 	}
-	
+
 	public String getRollString() {
 		return Integer.toString(roll);
 	}
 
 	public String getPeople() {
+		String person = " ";
 		for (Card c: hand) {
-			
 			if (c.getType().equals(CardType.PLAYER)) {
-				return c.getName() + "\n";
+				person += c.getName() + "\n";
 			}
+			
 		}
-		return " ";
+		return person;
 	}
 	public String getRooms() {
+		String room = " ";
 		for (Card c: hand) {
-			
 			if (c.getType().equals(CardType.ROOM)) {
-				return c.getName() + "\n";
+				room += c.getName() + "\n";
 			} 
 		}
-		return " ";
+		return room;
 	}
 	public String getWeapons() {
+		String weapon = " ";
 		for (Card c: hand) {
 			if (c.getType().equals(CardType.WEAPON)) {
-				return c.getName() + "\n";
+				weapon += c.getName() + "\n";
 			}
 		}
-		return " ";
+		return weapon;
 	}
-	
-	
+
+
 	public void addToHand(Card c){
 		hand.add(c);
 		numCards++;
@@ -136,7 +138,7 @@ public class Player {
 		int y = startingPosition.getRow()*LENGTH;
 		g.fillOval(x, y,LENGTH ,LENGTH );
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

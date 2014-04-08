@@ -33,7 +33,9 @@ public class ClueGame extends JFrame {
 	private Card weap;
 	private Card room;
 	private int whoseTurn = 4;
-
+	private boolean nextPlayer = true;
+	private ControlPanel controlPanel;
+	
 	public ClueGame() throws FileNotFoundException {
 		deck = new ArrayList<Card>();
 		seen = new ArrayList<Card>();
@@ -53,9 +55,9 @@ public class ClueGame extends JFrame {
 		setTitle("ClueGame");
 		add(board, BorderLayout.CENTER);
 		setSize(24 * 35, 24 * 35);
+		ControlPanel controlPanel = new ControlPanel(people.get(whoseTurn), this);
 		add(new CardDisplay(people.get(4)), BorderLayout.EAST);
-		add(new ControlPanel(people.get(whoseTurn)), BorderLayout.SOUTH);
-		
+		add(controlPanel, BorderLayout.SOUTH);
 	}
 
 	private JMenu createFileMenu() {
@@ -157,8 +159,22 @@ public class ClueGame extends JFrame {
 		in2.close();
 
 	}
+
+	public String nextPlayer() {
+		if (nextPlayer) {
+			if(whoseTurn == 5) {
+				whoseTurn = 1;
+			} else {
+				whoseTurn++;
+			}
+		}
+		System.out.println(whoseTurn);
+		return people.get(whoseTurn).getName();
+	}
 	
-	
+	public String turn() {
+		return people.get(whoseTurn).getName();
+	}
 
 	public Card handleSuggestion(String person, String room, String weapon,
 			Player accusingPerson) {

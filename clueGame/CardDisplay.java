@@ -11,7 +11,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class CardDisplay extends JPanel{
-	
+
 	public CardDisplay(Player player) {
 		setLayout(new GridLayout(4, 1));
 		JLabel myCards = new JLabel("My Cards");
@@ -23,5 +23,5 @@ public class CardDisplay extends JPanel{
 		WeaponsCardDisplay weapons = new WeaponsCardDisplay(player);
 		add(weapons);
 	}
-	
+
 }

@@ -34,6 +34,13 @@ public class Board extends JPanel {
 		targetSet = new HashSet<BoardCell>();
 		players = new ArrayList<Player>();
 	}
+	public Board(ArrayList<Player> players){
+		cells = new ArrayList<BoardCell>();
+		rooms = new HashMap<Character,String>();
+		adjMap = new HashMap<Integer, ArrayList<Integer>>();
+		targetSet = new HashSet<BoardCell>();
+		players = new ArrayList<Player>();
+	}
 	public Board(String c, String l){
 		csv = c;
 		legend = l;

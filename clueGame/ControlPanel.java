@@ -16,18 +16,30 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 public class ControlPanel extends JPanel {
+	private String whoseTurn;
 
-
-	public ControlPanel(Player player){
+	public ControlPanel(Player player, final ClueGame clueGame){
 		setLayout(new BorderLayout());
-		WhoseTurn whoTurn = new WhoseTurn();
+		WhoseTurn whoTurn = new WhoseTurn(clueGame);
 		add(whoTurn, BorderLayout.WEST);
-		JButton nextPlayer = new JButton("Next Player");
+		final JButton nextPlayer = new JButton("Next Player");
+		nextPlayer.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == nextPlayer) {
+					clueGame.nextPlayer();
+				}
+			}
+		});
 		JButton makeAccusation = new JButton("Make an accusation");
 		add(nextPlayer, BorderLayout.CENTER);
 		add(makeAccusation, BorderLayout.EAST);
 		Display dis = new Display(player);
 		add(dis, BorderLayout.SOUTH);
 	}
+	
+	public void setWhoseTurn(String whoseTurn) {
+		this.whoseTurn = whoseTurn;
+	}
+
 
 }
