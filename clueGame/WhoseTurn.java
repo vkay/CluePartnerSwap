@@ -10,17 +10,18 @@ import javax.swing.JTextField;
 
 public class WhoseTurn extends JPanel {
 	private JTextField name;
-	private String whoseTurn;
 
 	public WhoseTurn(ClueGame clueGame) {
 		setLayout(new GridLayout(0,1));
 		setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5) ); 
 		JLabel turn = new JLabel("Whose turn?");
 		add(turn);
-		name = new JTextField(clueGame.nextPlayer(), 10);
+		name = new JTextField(10);
 		add(name);
 	}
 	
-	
+	public void setWhoseTurn(String who) {
+		name.setText(who);
+	}
 	
 }

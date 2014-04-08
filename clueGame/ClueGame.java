@@ -55,7 +55,7 @@ public class ClueGame extends JFrame {
 		setTitle("ClueGame");
 		add(board, BorderLayout.CENTER);
 		setSize(24 * 35, 24 * 35);
-		ControlPanel controlPanel = new ControlPanel(people.get(whoseTurn), this);
+		controlPanel = new ControlPanel(people.get(whoseTurn), this);
 		add(new CardDisplay(people.get(4)), BorderLayout.EAST);
 		add(controlPanel, BorderLayout.SOUTH);
 	}
@@ -160,16 +160,16 @@ public class ClueGame extends JFrame {
 
 	}
 
-	public String nextPlayer() {
+	public void nextPlayer() {
 		if (nextPlayer) {
-			if(whoseTurn == 5) {
-				whoseTurn = 1;
+			if(whoseTurn == people.size() - 1) {
+				whoseTurn = 0;
 			} else {
 				whoseTurn++;
 			}
 		}
 		System.out.println(whoseTurn);
-		return people.get(whoseTurn).getName();
+		controlPanel.setWhoseTurn(people.get(whoseTurn).getName());
 	}
 	
 	public String turn() {

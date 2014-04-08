@@ -17,10 +17,11 @@ import javax.swing.JTextField;
 
 public class ControlPanel extends JPanel {
 	private String whoseTurn;
+	private WhoseTurn whoTurn;
 
 	public ControlPanel(Player player, final ClueGame clueGame){
 		setLayout(new BorderLayout());
-		WhoseTurn whoTurn = new WhoseTurn(clueGame);
+		whoTurn = new WhoseTurn(clueGame);
 		add(whoTurn, BorderLayout.WEST);
 		final JButton nextPlayer = new JButton("Next Player");
 		nextPlayer.addActionListener(new ActionListener(){
@@ -38,7 +39,7 @@ public class ControlPanel extends JPanel {
 	}
 	
 	public void setWhoseTurn(String whoseTurn) {
-		this.whoseTurn = whoseTurn;
+		whoTurn.setWhoseTurn(whoseTurn);
 	}
 
 
