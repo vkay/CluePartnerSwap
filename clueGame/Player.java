@@ -9,7 +9,7 @@ import java.util.Random;
 public class Player {
 	private String name;
 	private String color;
-	protected BoardCell startingPosition;
+	protected BoardCell currentPosition;
 	private int numCards=0;
 	protected ArrayList<Card> hand;
 	public static int LENGTH = 30;
@@ -28,12 +28,13 @@ public class Player {
 		
 	}*/
 
-	public int getRoll() {
-		return new Random().nextInt(6) + 1;
+	public int Roll() {
+		roll = new Random().nextInt(6) + 1;
+		return roll;
 	}
-
-	public String getRollString() {
-		return Integer.toString(roll);
+	
+	public int getRoll() {
+		return roll;
 	}
 
 	public String getPeople() {
@@ -97,18 +98,18 @@ public class Player {
 	}
 
 	public BoardCell getStartingPosition() {
-		return startingPosition;
+		return currentPosition;
 	}
 
 	public void setStartingPosition(BoardCell startingPosition) {
-		this.startingPosition = startingPosition;
+		this.currentPosition = startingPosition;
 	}
 
 	public Player(String name, String color, BoardCell startingPosition) {
 		super();
 		this.name = name;
 		this.color = color;
-		this.startingPosition = startingPosition;
+		this.currentPosition = startingPosition;
 		hand = new ArrayList<Card>();
 	}
 
@@ -131,11 +132,15 @@ public class Player {
 	public int getNumCards() {
 		return numCards;
 	}
+	
+	public void setCurrentPosition(BoardCell boardCell) {
+		currentPosition = boardCell;
+	}
 
 	public void draw(Graphics g, Board board){
 		g.setColor(getColor());
-		int x = startingPosition.getCol()*LENGTH;
-		int y = startingPosition.getRow()*LENGTH;
+		int x = currentPosition.getCol()*LENGTH;
+		int y = currentPosition.getRow()*LENGTH;
 		g.fillOval(x, y,LENGTH ,LENGTH );
 	}
 
@@ -158,10 +163,10 @@ public class Player {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (startingPosition == null) {
-			if (other.startingPosition != null)
+		if (currentPosition == null) {
+			if (other.currentPosition != null)
 				return false;
-		} else if (!startingPosition.equals(other.startingPosition))
+		} else if (!currentPosition.equals(other.currentPosition))
 			return false;
 		return true;
 	}

@@ -41,7 +41,7 @@ public class ComputerPlayer extends Player {
 	public Solution createdSuggestion(ArrayList<Card> deck, ArrayList<Card> seen, Map<Character,String> key){
 		String accusedName="";
 		String accusedWeap="";
-		String accusedRoom=key.get(startingPosition.getType());
+		String accusedRoom=key.get(currentPosition.getType());
 		ArrayList<Card> playerChoices = new ArrayList<Card>();
 		ArrayList<Card> weapChoices = new ArrayList<Card>();
 		for(Card c: deck){
@@ -64,6 +64,12 @@ public class ComputerPlayer extends Player {
 	}
 	public ComputerPlayer(String name, String color, BoardCell startingPosition) {
 		super(name, color, startingPosition);
+	}
+	
+	public void makeMove(ClueGame clueGame) {
+		clueGame.getBoard().calcTargets(currentPosition.getRow(), currentPosition.getCol(), getRoll());
+		setCurrentPosition(pickLocation(clueGame.getBoard().getTargets()));
+		clueGame.getBoard().repaint();
 	}
 
 }
