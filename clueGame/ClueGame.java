@@ -1,7 +1,6 @@
 package clueGame;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -17,6 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("serial")
 public class ClueGame extends JFrame {
 	private static ArrayList<Player> people;
 	private ArrayList<Card> deck;
@@ -28,13 +28,11 @@ public class ClueGame extends JFrame {
 	private int countPlay = 0;
 	private int countRoom = 0;
 	private Solution solu;
-	private Random rn;
-	private Card pers;
-	private Card weap;
-	private Card room;
-	private int whoseTurn = 4;
+	private int whoseTurn;
 	private boolean nextPlayer = true;
 	private ControlPanel controlPanel;
+	private int numPlayers;
+	private int humanPlayerIndex;
 	
 	public ClueGame() throws FileNotFoundException {
 		deck = new ArrayList<Card>();
@@ -43,6 +41,7 @@ public class ClueGame extends JFrame {
 		board = new Board("clueLayout1.csv", "cluelegend.txt");
 		board.loadConfigFiles();
 		loadConfigFiles();
+		whoseTurn = humanPlayerIndex-1;
 		board.setPlayers(people);
 		deal();
 		/*for (Player p: people) {
@@ -138,8 +137,11 @@ public class ClueGame extends JFrame {
 		in.close();
 		FileReader reader2 = new FileReader(playerLeg);
 		Scanner in2 = new Scanner(reader2);
-		int count = 1;
-		while (in2.hasNextLine()) {
+		Random rand = new Random();
+		numPlayers = in2.nextInt();
+		in2.nextLine();
+		humanPlayerIndex = rand.nextInt(numPlayers);
+		for (int count = 1; in2.hasNextLine(); count++) {
 			String playerName = in2.nextLine();
 			String playerColor = in2.nextLine();
 			int x = in2.nextInt();
@@ -147,14 +149,13 @@ public class ClueGame extends JFrame {
 			if (count != 6) {
 				String extra = in2.nextLine();
 			}
-			if (count == 5) {
+			if (count == humanPlayerIndex) {
 				people.add(new HumanPlayer(playerName, playerColor, board
 						.getCell(x, y)));
 			} else {
 				people.add(new ComputerPlayer(playerName, playerColor, board
 						.getCell(x, y)));
 			}
-			count++;
 		}
 		in2.close();
 
@@ -168,7 +169,6 @@ public class ClueGame extends JFrame {
 				whoseTurn++;
 			}
 		}
-		System.out.println(whoseTurn);
 		controlPanel.setWhoseTurn(people.get(whoseTurn).getName());
 	}
 	
@@ -235,7 +235,7 @@ public class ClueGame extends JFrame {
 		ClueGame game = new ClueGame();
 		game.setVisible(true);
 		JOptionPane.showMessageDialog(new JFrame(),
-				"You are Peacock, press Next Player to begin play.",
+				"You are " + people.get(game.humanPlayerIndex) +", press Next Player to begin play.",
 				"Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 
 	}
