@@ -284,7 +284,7 @@ public class Board extends JPanel {
 
 		for (Integer s : arr) {
 			check[s] = true;
-			if (steps == 1 || getRoomCell(s).isDoorway()) {
+			if (steps <= 1 || getRoomCell(s).isDoorway()) {
 				targetSet.add(getCell(s));
 			}
 			else {
