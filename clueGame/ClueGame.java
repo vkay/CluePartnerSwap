@@ -137,18 +137,16 @@ public class ClueGame extends JFrame {
 		in.close();
 		FileReader reader2 = new FileReader(playerLeg);
 		Scanner in2 = new Scanner(reader2);
-		Random rand = new Random();
 		numPlayers = in2.nextInt();
-		in2.nextLine();
-		humanPlayerIndex = rand.nextInt(numPlayers);
+		humanPlayerIndex = (new Random()).nextInt(numPlayers);
 		for (int count = 1; in2.hasNextLine(); count++) {
+			in2.nextLine();
+			
 			String playerName = in2.nextLine();
 			String playerColor = in2.nextLine();
 			int x = in2.nextInt();
 			int y = in2.nextInt();
-			if (count != 6) {
-				String extra = in2.nextLine();
-			}
+			
 			if (count == humanPlayerIndex) {
 				people.add(new HumanPlayer(playerName, playerColor, board
 						.getCell(x, y)));
