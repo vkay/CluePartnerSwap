@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 public class ControlPanel extends JPanel {
 	private String whoseTurn;
 	private WhoseTurn whoTurn;
+	private Display dis;
 
 	public ControlPanel(Player player, final ClueGame clueGame){
 		setLayout(new BorderLayout());
@@ -34,12 +35,16 @@ public class ControlPanel extends JPanel {
 		JButton makeAccusation = new JButton("Make an accusation");
 		add(nextPlayer, BorderLayout.CENTER);
 		add(makeAccusation, BorderLayout.EAST);
-		Display dis = new Display(player);
+		dis = new Display(player);
 		add(dis, BorderLayout.SOUTH);
 	}
 	
 	public void setWhoseTurn(String whoseTurn) {
 		whoTurn.setWhoseTurn(whoseTurn);
+	}
+	
+	public Display getDisplay() {
+		return dis;
 	}
 
 

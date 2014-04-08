@@ -13,11 +13,14 @@ private JTextField die;
 	public DieDisplay(Player player) {
 		JLabel roll = new JLabel("Roll");
 		add(roll);
-		die = new JTextField(player.getRollString(), 3);
+		die = new JTextField(3);
 		add(die);
 		setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 
 	}
 
-
+	public void setRoll(int roll) {
+		die.setText(Integer.toString(roll));
+	}
+	
 }

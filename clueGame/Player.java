@@ -29,7 +29,7 @@ public class Player {
 	}*/
 
 	public int getRoll() {
-		return roll;
+		return new Random().nextInt(6) + 1;
 	}
 
 	public String getRollString() {
