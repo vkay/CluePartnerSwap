@@ -8,7 +8,16 @@ public class HumanPlayer extends Player {
 	
 	@Override
 	public void handleTurn(ClueGame clueGame) {
-		clueGame.getBoard().highlightTargets();
+		clueGame.setHumanTurnFinished(false);
+		roll();
+		clueGame.getBoard().calcAdjacencies(currentPosition.getRow(), currentPosition.getCol());
+		clueGame.getBoard().calcTargets(currentPosition.getRow(), currentPosition.getCol(), getRoll());
+		clueGame.getBoard().setHighlighted(true);
+	}
+	
+	public void makeMove(Board board, int row, int col) {
+		setCurrentPosition(board.getCell(row, col));
+		board.repaint();
 	}
 
 }

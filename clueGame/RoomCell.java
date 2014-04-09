@@ -66,6 +66,7 @@ public class RoomCell extends BoardCell {
 
 	@Override
 	public void draw(Graphics g, Board board) {
+		setHighlighted(false);
 		g.setColor(Color.gray);
 		g.fillRect(getCol()*LENGTH, getRow()*LENGTH, LENGTH, LENGTH);
 		if (isDoorway()){

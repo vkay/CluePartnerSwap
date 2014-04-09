@@ -29,7 +29,7 @@ public class ClueGame extends JFrame {
 	private int countRoom = 0;
 	private Solution solu;
 	private int whoseTurn;
-	private boolean nextPlayer = true;
+	private boolean isHumanTurnFinished;
 	private ControlPanel controlPanel;
 	private int numPlayers;
 	private int humanPlayerIndex;
@@ -38,7 +38,7 @@ public class ClueGame extends JFrame {
 		deck = new ArrayList<Card>();
 		seen = new ArrayList<Card>();
 		people = new ArrayList<Player>();
-		board = new Board("clueLayout1.csv", "cluelegend.txt");
+		board = new Board("clueLayout1.csv", "cluelegend.txt", this);
 		board.loadConfigFiles();
 		loadConfigFiles();
 		whoseTurn = humanPlayerIndex-1;
@@ -57,6 +57,8 @@ public class ClueGame extends JFrame {
 		controlPanel = new ControlPanel(people.get(whoseTurn+1), this);
 		add(new CardDisplay(people.get(humanPlayerIndex)), BorderLayout.EAST);
 		add(controlPanel, BorderLayout.SOUTH);
+		
+		isHumanTurnFinished = true;
 	}
 
 	private JMenu createFileMenu() {
@@ -162,7 +164,7 @@ public class ClueGame extends JFrame {
 	}
 
 	public void nextPlayer() {
-		if (nextPlayer) {
+		if (isHumanTurnFinished) {
 			if (whoseTurn == people.size() - 1) whoseTurn = 0;
 			else whoseTurn++;
 			people.get(whoseTurn).handleTurn(this);
@@ -171,6 +173,16 @@ public class ClueGame extends JFrame {
 		}
 		controlPanel.setWhoseTurn(people.get(whoseTurn).getName());
 		controlPanel.getDisplay().setRoll(people.get(whoseTurn).getRoll());
+	}
+	
+	public void setHumanTurnFinished (boolean isTurnFinished) {
+		isHumanTurnFinished = isTurnFinished;
+	}
+	
+	public void moveHuman(int row, int col) {
+		((HumanPlayer) people.get(humanPlayerIndex)).makeMove(board, row, col);
+		board.setHighlighted(false);
+		isHumanTurnFinished = true;
 	}
 	
 	public String turn() {
@@ -229,6 +241,14 @@ public class ClueGame extends JFrame {
 
 	public int countRoom() {
 		return countRoom;
+	}
+	
+	public ArrayList<Player> getPeople() {
+		return people;
+	}
+	
+	public int getWhoseTurn() {
+		return whoseTurn;
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {

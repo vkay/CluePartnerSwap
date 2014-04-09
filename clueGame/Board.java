@@ -1,6 +1,8 @@
 package clueGame;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -25,22 +28,29 @@ public class Board extends JPanel {
 	private Set<BoardCell> targetSet;
 	boolean[] check = null;
 	private ArrayList<Player> players;
+	private boolean targetsHighlighted;
+	private ClueGame game;
 
-	public Board(){
+	public Board(ClueGame game){
+		this.game = game;
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character,String>();
 		adjMap = new HashMap<Integer, ArrayList<Integer>>();
 		targetSet = new HashSet<BoardCell>();
 		players = new ArrayList<Player>();
+		addMouseListener(new BoardListener());
 	}
-	public Board(ArrayList<Player> players){
+	public Board(ArrayList<Player> players, ClueGame game){
+		this.game = game;
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character,String>();
 		adjMap = new HashMap<Integer, ArrayList<Integer>>();
 		targetSet = new HashSet<BoardCell>();
 		players = new ArrayList<Player>();
+		addMouseListener(new BoardListener());
 	}
-	public Board(String c, String l){
+	public Board(String c, String l, ClueGame game){
+		this.game = game;
 		csv = c;
 		legend = l;
 		cells = new ArrayList<BoardCell>();
@@ -48,6 +58,7 @@ public class Board extends JPanel {
 		adjMap = new HashMap<Integer, ArrayList<Integer>>();
 		targetSet = new HashSet<BoardCell>();
 		players = new ArrayList<Player>();
+		addMouseListener(new BoardListener());
 	}
 
 	public void loadLegend() throws BadConfigFormatException {
@@ -270,6 +281,11 @@ public class Board extends JPanel {
 	}
 
 	public void calcTargets(int row, int col, int steps) {
+		targetSet.clear();
+		createTargets(row,col,steps);
+	}
+	
+	public void createTargets(int row, int col, int steps) {
 		ArrayList<Integer> arr = new ArrayList<Integer>();
 		int index = calcIndex(row, col);
 		check[index] = true;
@@ -288,7 +304,7 @@ public class Board extends JPanel {
 			else {
 				row = s / numColumns;
 				col = s % numColumns;
-				calcTargets(row, col, steps - 1);
+				createTargets(row, col, steps - 1);
 			}
 			check[s] = false;
 		}
@@ -301,8 +317,8 @@ public class Board extends JPanel {
 		return set;
 	}
 	
-	public void highlightTargets() {
-		
+	public void setHighlighted(boolean bool) {
+		targetsHighlighted = bool;
 		repaint();
 	}
 
@@ -329,10 +345,50 @@ public class Board extends JPanel {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		for (BoardCell b: cells ){
-			b.draw(g,  this);
+			if (targetsHighlighted && targetSet.contains(b)) b.drawHighlighted(g, this);
+			else b.draw(g, this);
 		}
 		for(Player p : players){
 			p.draw(g, this);
+		}
+	}
+	
+	class BoardListener implements MouseListener {
+		
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			if (game.getPeople().get(game.getWhoseTurn()) instanceof HumanPlayer) {
+				int x = arg0.getX()/BoardCell.LENGTH;
+				int y = arg0.getY()/BoardCell.LENGTH;
+				if (getCell(y,x).isHighlighted()) game.moveHuman(y, x);
+				else JOptionPane.showMessageDialog(game, "That target is invalid.",
+		       			"ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
 		}
 	}
 
