@@ -360,6 +360,7 @@ public class Board extends JPanel {
 			if (game.getPeople().get(game.getWhoseTurn()) instanceof HumanPlayer) {
 				int x = arg0.getX()/BoardCell.LENGTH;
 				int y = arg0.getY()/BoardCell.LENGTH;
+				if (calcIndex(y,x) >= cells.size()) return;
 				if (getCell(y,x).isHighlighted()) game.moveHuman(y, x);
 				else JOptionPane.showMessageDialog(game, "That target is invalid.",
 		       			"ERROR", JOptionPane.ERROR_MESSAGE);
