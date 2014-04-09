@@ -6,7 +6,8 @@ public class HumanPlayer extends Player {
 		super(name, color, startingPosition);
 	}
 	
-	public void makeMove(ClueGame clueGame) {
+	@Override
+	public void handleTurn(ClueGame clueGame) {
 		clueGame.getBoard().highlightTargets();
 	}
 

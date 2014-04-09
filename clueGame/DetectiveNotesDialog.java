@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class DetectiveNotesDialog extends JDialog {
-	private JTextField name;
 
 	public DetectiveNotesDialog(ArrayList<Card> deck){
 		ArrayList<String> people = new ArrayList<String>();

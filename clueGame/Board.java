@@ -1,7 +1,5 @@
 package clueGame;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,9 +11,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Board extends JPanel {
 	private ArrayList<BoardCell> cells;
 	private Map<Character,String> rooms;
@@ -74,11 +72,10 @@ public class Board extends JPanel {
 				value = str[1];
 				rooms.put(key, value);
 			}
-		} catch (FileNotFoundException e) {
-			System.out.println("Cannot find file: " + legend);
-		} catch (IOException e) {
-			System.out.println("Cannot input from file: " + legend);
-		}	
+		} catch (Exception e) {
+			if (e instanceof FileNotFoundException) System.out.println("Cannot find file: " + legend);
+			else System.out.println("Cannot input from file: " + legend);
+		}
 	}
 
 	public void loadLayout() throws BadConfigFormatException {

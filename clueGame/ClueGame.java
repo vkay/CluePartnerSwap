@@ -163,23 +163,14 @@ public class ClueGame extends JFrame {
 
 	public void nextPlayer() {
 		if (nextPlayer) {
-			if(whoseTurn == people.size() - 1) {
-				whoseTurn = 0;
-			} else {
-				whoseTurn++;
-			}
-
-			if (people.get(whoseTurn) instanceof HumanPlayer) {
-				((HumanPlayer) people.get(whoseTurn)).makeMove(this);
-				
-			} else {
-				((ComputerPlayer) people.get(whoseTurn)).makeMove(this);
-			}
+			if (whoseTurn == people.size() - 1) whoseTurn = 0;
+			else whoseTurn++;
+			people.get(whoseTurn).handleTurn(this);
 		} else {
 			JOptionPane.showMessageDialog(this, "Current turn is not complete.", "Error!", JOptionPane.ERROR_MESSAGE);
 		}
 		controlPanel.setWhoseTurn(people.get(whoseTurn).getName());
-		controlPanel.getDisplay().setRoll(people.get(whoseTurn).Roll());
+		controlPanel.getDisplay().setRoll(people.get(whoseTurn).getRoll());
 	}
 	
 	public String turn() {

@@ -66,7 +66,9 @@ public class ComputerPlayer extends Player {
 		super(name, color, startingPosition);
 	}
 	
-	public void makeMove(ClueGame clueGame) {
+	@Override
+	public void handleTurn(ClueGame clueGame) {
+		roll();
 		clueGame.getBoard().calcAdjacencies(currentPosition.getRow(), currentPosition.getCol());
 		clueGame.getBoard().calcTargets(currentPosition.getRow(), currentPosition.getCol(), getRoll());
 		setCurrentPosition(pickLocation(clueGame.getBoard().getTargets()));

@@ -1,15 +1,11 @@
 package clueGame;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("serial")
 public class CardDisplay extends JPanel{
 
 	public CardDisplay(Player player) {

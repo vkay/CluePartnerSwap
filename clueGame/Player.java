@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Player {
+public abstract class Player {
 	private String name;
 	private String color;
 	protected BoardCell currentPosition;
@@ -28,9 +28,8 @@ public class Player {
 		
 	}*/
 
-	public int Roll() {
+	public void roll() {
 		roll = new Random().nextInt(6) + 1;
-		return roll;
 	}
 	
 	public int getRoll() {
@@ -128,6 +127,8 @@ public class Player {
 		return null;
 
 	}
+	
+	public abstract void handleTurn(ClueGame game);
 
 	public int getNumCards() {
 		return numCards;
