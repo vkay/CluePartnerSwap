@@ -156,7 +156,6 @@ public class ClueGame extends JFrame {
 						.getCell(x, y)));
 			}
 			
-			System.out.println(people);
 		}
 		in2.close();
 
@@ -169,12 +168,9 @@ public class ClueGame extends JFrame {
 			} else {
 				whoseTurn++;
 			}
-<<<<<<< HEAD
-			Player play = people.get(whoseTurn);
-			if (play instanceof HumanPlayer) {
-=======
+
 			if (people.get(whoseTurn) instanceof HumanPlayer) {
->>>>>>> b3f56a6f3a1272c861bb108c46eaace8b4bd77cf
+				((HumanPlayer) people.get(whoseTurn)).makeMove(this);
 				
 			} else {
 				((ComputerPlayer) people.get(whoseTurn)).makeMove(this);

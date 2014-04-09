@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -301,6 +302,11 @@ public class Board extends JPanel {
 		Set<BoardCell> set = targetSet;
 		targetSet = new HashSet<BoardCell>();	
 		return set;
+	}
+	
+	public void highlightTargets() {
+		
+		repaint();
 	}
 
 	public Map<Integer, ArrayList<Integer>> getAdjMap() {
