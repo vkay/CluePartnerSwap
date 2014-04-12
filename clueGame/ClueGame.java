@@ -33,6 +33,7 @@ public class ClueGame extends JFrame {
 	private ControlPanel controlPanel;
 	private int numPlayers;
 	private int humanPlayerIndex;
+	private boolean accusationFlag;
 	
 	public ClueGame() throws FileNotFoundException {
 		deck = new ArrayList<Card>();
@@ -44,9 +45,6 @@ public class ClueGame extends JFrame {
 		whoseTurn = humanPlayerIndex-1;
 		board.setPlayers(people);
 		deal();
-		/*for (Player p: people) {
-			p.humanTurn();
-		}*/
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
@@ -57,7 +55,6 @@ public class ClueGame extends JFrame {
 		controlPanel = new ControlPanel(people.get(whoseTurn+1), this);
 		add(new CardDisplay(people.get(humanPlayerIndex)), BorderLayout.EAST);
 		add(controlPanel, BorderLayout.SOUTH);
-		
 		isHumanTurnFinished = true;
 	}
 
@@ -168,6 +165,8 @@ public class ClueGame extends JFrame {
 			if (whoseTurn == people.size() - 1) whoseTurn = 0;
 			else whoseTurn++;
 			people.get(whoseTurn).handleTurn(this);
+			/*handleSuggestion(people.get(whoseTurn).getSuggestion().getPerson(), people.get(whoseTurn).getSuggestion().getRoom(), 
+					people.get(whoseTurn).getSuggestion().getWeapon(), people.get(whoseTurn));*/
 		} else {
 			JOptionPane.showMessageDialog(this, "Current turn is not complete.", "Error!", JOptionPane.ERROR_MESSAGE);
 		}
@@ -207,9 +206,26 @@ public class ClueGame extends JFrame {
 				break;
 			}
 		}
+		/*if (c == null) {
+			accusationFlag = true;
+			setSuggAsAccu(new Solution(person, room, weapon), people.get(whoseTurn));
+			System.out.println(people.get(whoseTurn).getAccusation());
+		} else {
+			accusationFlag = false;
+		}*/
+		
+		//controlPanel.getDisplay().setGuess();
+		controlPanel.getDisplay().setResponse(c.getName());
+		
 		return c;
 
 	}
+	
+	/*public void setSuggAsAccu(Solution suggestion, Player accusingPerson) {
+		if(accusationFlag) {
+			accusingPerson.setAccusation(suggestion);
+		}
+	}*/
 
 	public boolean checkAccusation(Solution accusation) {
 		return accusation.equals(solu);

@@ -32,6 +32,18 @@ public class Solution {
 		return true;
 	}
 
+	/*public String getPerson() {
+		return person;
+	}
+
+	public String getWeapon() {
+		return weapon;
+	}
+
+	public String getRoom() {
+		return room;
+	}*/
+
 	public Solution(String room, String person, String weapon) {
 		super();
 		this.person = person;

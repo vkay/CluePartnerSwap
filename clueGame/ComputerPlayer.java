@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	private char lastRoomVisited = ' ';
+	/*private Solution suggestion;*/
 
 	public BoardCell pickLocation(Set<BoardCell> targets){
 		BoardCell b = null;
@@ -56,9 +57,14 @@ public class ComputerPlayer extends Player {
 		Random rn = new Random();
 		accusedName = playerChoices.get( Math.abs( rn.nextInt() ) % playerChoices.size() ).getName();
 		accusedWeap = weapChoices.get( Math.abs( rn.nextInt() ) % weapChoices.size() ).getName();
+		/*suggestion = new Solution(accusedRoom, accusedName, accusedWeap);
+		return suggestion;*/
 		return new Solution( accusedRoom,accusedName ,accusedWeap);
-
 	}
+	
+	/*public Solution getSuggestion() {
+		return suggestion;
+	}*/
 	public void updateSeen(Card seen){
 
 	}
@@ -73,6 +79,9 @@ public class ComputerPlayer extends Player {
 		clueGame.getBoard().calcTargets(currentPosition.getRow(), currentPosition.getCol(), getRoll());
 		setCurrentPosition(pickLocation(clueGame.getBoard().getTargets()));
 		clueGame.getBoard().repaint();
-	}
+		/*if(currentPosition.isRoom()) {
+			createdSuggestion(clueGame.getDeck(), clueGame.getSeen(), clueGame.getBoard().getRooms());
+		}
+*/	}
 
 }
