@@ -17,9 +17,11 @@ public class SuggestionDialog extends JDialog {
 	private ClueGame game;
 	JComboBox<String> playerBox;
 	JComboBox<String> weaponBox;
+	Card result;
 
 	public SuggestionDialog(ArrayList<Card> deck, BoardCell currentPosition, ClueGame game, Player player) {
 		this.game = game;
+		result = new Card();
 		setTitle("Make a suggestion!");
 		setSize(300,300);
 		setVisible(true);
@@ -60,6 +62,10 @@ public class SuggestionDialog extends JDialog {
 	}
 	
 	
+	public Card getResult() {
+		return result;
+	}
+	
 	class ButtonListener implements ActionListener {
 		JComboBox<String> player, weapon;
 		String room;
@@ -76,7 +82,7 @@ public class SuggestionDialog extends JDialog {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == makeSuggestion)
-			game.handleSuggestion((String)player.getSelectedItem(), room, (String)weapon.getSelectedItem(), accuser);
+				result = game.handleSuggestion((String)player.getSelectedItem(), room, (String)weapon.getSelectedItem(), accuser);
 			else {
 				setVisible(false); 
 				dispose();
