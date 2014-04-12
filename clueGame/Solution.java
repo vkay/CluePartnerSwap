@@ -32,7 +32,7 @@ public class Solution {
 		return true;
 	}
 
-	/*public String getPerson() {
+	public String getPerson() {
 		return person;
 	}
 
@@ -42,7 +42,7 @@ public class Solution {
 
 	public String getRoom() {
 		return room;
-	}*/
+	}
 
 	public Solution(String room, String person, String weapon) {
 		super();
