@@ -14,19 +14,19 @@ public abstract class Player {
 	protected ArrayList<Card> hand;
 	public static int LENGTH = 30;
 	private int roll;
+	//private Solution accusation;
+
+	/*public Solution getAccusation() {
+		return accusation;
+	}
+
+	public void setAccusation(Solution accusation) {
+		this.accusation = accusation;
+	}*/
 
 	public ArrayList<Card> getHand() {
 		return hand;
 	}
-
-	/*public void humanTurn() {
-		
-		roll = 1 + (int)(Math.random() * ((6-1) + 1));
-		calcTargets();
-		getTargets();
-		repaint(); //paint targets
-		
-	}*/
 
 	public void roll() {
 		roll = new Random().nextInt(6) + 1;
@@ -129,6 +129,8 @@ public abstract class Player {
 	}
 	
 	public abstract void handleTurn(ClueGame game);
+	
+	//public abstract Solution getSuggestion();
 
 	public int getNumCards() {
 		return numCards;

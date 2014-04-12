@@ -18,4 +18,8 @@ private JTextField res;
 		add(res);
 		setBorder(new TitledBorder (new EtchedBorder(), "Guess Result"));
 	}
+	
+	public void setResponse(String response) {
+		res.setText(response);
+	}
 }
