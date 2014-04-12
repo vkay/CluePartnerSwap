@@ -82,7 +82,7 @@ public class ComputerPlayer extends Player {
 		if(currentPosition.isRoom()) {
 			System.out.println("hello");
 			createdSuggestion(clueGame.getDeck(), clueGame.getSeen(), clueGame.getBoard().getRooms());
-			//clueGame.handleSuggestion()
+			clueGame.handleSuggestion(suggestion.getPerson(), suggestion.getRoom(), suggestion.getWeapon(), clueGame.getPeople().get(clueGame.getWhoseTurn()));
 		}
 	}
 
