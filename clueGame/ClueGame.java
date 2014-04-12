@@ -180,13 +180,17 @@ public class ClueGame extends JFrame {
 	}
 	
 	public void moveHuman(int row, int col) {
-		((HumanPlayer) people.get(humanPlayerIndex)).makeMove(board, row, col);
+		((HumanPlayer) people.get(humanPlayerIndex)).makeMove(this, board, row, col);
 		board.setHighlighted(false);
 		isHumanTurnFinished = true;
 	}
 	
 	public String turn() {
 		return people.get(whoseTurn).getName();
+	}
+	
+	public void humanSuggestion() {
+		SuggestionDialog suggestion = new SuggestionDialog(deck, people.get(humanPlayerIndex).currentPosition, this, people.get(humanPlayerIndex));
 	}
 
 	public Card handleSuggestion(String person, String room, String weapon, Player accusingPerson) {
