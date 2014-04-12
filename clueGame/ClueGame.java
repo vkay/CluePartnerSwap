@@ -190,6 +190,7 @@ public class ClueGame extends JFrame {
 	
 	public void humanSuggestion() {
 		SuggestionDialog suggestion = new SuggestionDialog(deck, people.get(humanPlayerIndex).currentPosition, this, people.get(humanPlayerIndex));
+		
 	}
 
 	public Card handleSuggestion(String person, String room, String weapon, Player accusingPerson) {
@@ -220,7 +221,6 @@ public class ClueGame extends JFrame {
 		
 		controlPanel.getDisplay().setGuess(person + ", " + room + ", and " + weapon);
 		controlPanel.getDisplay().setResponse(c.getName());
-		
 		return c;
 
 	}
