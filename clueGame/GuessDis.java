@@ -14,7 +14,7 @@ public class GuessDis extends JPanel{
 	public GuessDis(Player player) {
 		JLabel guess = new JLabel("Guess");
 		add(guess);
-		gue = new JTextField(15);
+		gue = new JTextField(18);
 		gue.setEditable(false);
 		add(gue);
 		setBorder(new TitledBorder (new EtchedBorder(), "Guess"));

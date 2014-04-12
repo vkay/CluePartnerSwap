@@ -220,9 +220,8 @@ public class ClueGame extends JFrame {
 			accusationFlag = false;
 		}*/
 		
-		//controlPanel.getDisplay().setGuess();
-		//controlPanel.getDisplay().setResponse(c.getName());
-		
+		controlPanel.getDisplay().setGuess(person + ", " + room + ", and " + weapon);
+		controlPanel.getDisplay().setResponse(c.getName());
 		return c;
 
 	}
