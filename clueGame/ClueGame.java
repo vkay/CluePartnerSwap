@@ -190,8 +190,7 @@ public class ClueGame extends JFrame {
 	
 	public void humanSuggestion() {
 		SuggestionDialog suggestion = new SuggestionDialog(deck, people.get(humanPlayerIndex).currentPosition, this, people.get(humanPlayerIndex));
-		if (suggestion.getResult() == null) JOptionPane.showMessageDialog(this, "No player has a card to show.", "Result", JOptionPane.INFORMATION_MESSAGE);
-		else JOptionPane.showMessageDialog(this, "Your suggestion is false", "Result", JOptionPane.INFORMATION_MESSAGE);
+		
 	}
 
 	public Card handleSuggestion(String person, String room, String weapon, Player accusingPerson) {

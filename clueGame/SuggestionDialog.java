@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class SuggestionDialog extends JDialog {
@@ -81,8 +82,13 @@ public class SuggestionDialog extends JDialog {
 		}
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (arg0.getSource() == makeSuggestion)
+			if (arg0.getSource() == makeSuggestion) {
 				result = game.handleSuggestion((String)player.getSelectedItem(), room, (String)weapon.getSelectedItem(), accuser);
+				if (result== null) JOptionPane.showMessageDialog(game, "No player has a card to show.", "Result", JOptionPane.INFORMATION_MESSAGE);
+				else JOptionPane.showMessageDialog(game, "Your suggestion is false", "Result", JOptionPane.INFORMATION_MESSAGE);
+				setVisible(false); 
+				dispose();
+			}
 			else {
 				setVisible(false); 
 				dispose();
