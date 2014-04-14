@@ -22,7 +22,7 @@ public class Display extends JPanel {
 		addComp(dieDis,0,0,1,1,GridBagConstraints.HORIZONTAL, .10, 0.0);
 		guessDis = new DisplayPanel("Guess",150,30);
 		addComp(guessDis,1,0,1,1,GridBagConstraints.HORIZONTAL, .6, 0.0);
-		resDis = new DisplayPanel("Result",25,7);
+		resDis = new DisplayPanel("Result",25,10);
 		addComp(resDis,2,0,1,1,GridBagConstraints.HORIZONTAL, .3, 0.0);
 	}
 
