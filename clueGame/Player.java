@@ -10,7 +10,7 @@ public abstract class Player {
 	private String name;
 	private String color;
 	protected BoardCell currentPosition;
-	private int numCards=0;
+	private int numCards = 0;
 	protected ArrayList<Card> hand;
 	public static int LENGTH = 30;
 	private int roll;
@@ -22,33 +22,35 @@ public abstract class Player {
 	public void roll() {
 		roll = new Random().nextInt(6) + 1;
 	}
-	
+
 	public int getRoll() {
 		return roll;
 	}
 
 	public String getPeople() {
-		String person = " ";
-		for (Card c: hand) {
+		String person = "";
+		for (Card c : hand) {
 			if (c.getType().equals(CardType.PLAYER)) {
 				person += c.getName() + "\n";
 			}
-			
+
 		}
 		return person;
 	}
+
 	public String getRooms() {
-		String room = " ";
-		for (Card c: hand) {
+		String room = "";
+		for (Card c : hand) {
 			if (c.getType().equals(CardType.ROOM)) {
 				room += c.getName() + "\n";
-			} 
+			}
 		}
 		return room;
 	}
+
 	public String getWeapons() {
-		String weapon = " ";
-		for (Card c: hand) {
+		String weapon = "";
+		for (Card c : hand) {
 			if (c.getType().equals(CardType.WEAPON)) {
 				weapon += c.getName() + "\n";
 			}
@@ -56,8 +58,7 @@ public abstract class Player {
 		return weapon;
 	}
 
-
-	public void addToHand(Card c){
+	public void addToHand(Card c) {
 		hand.add(c);
 		numCards++;
 	}
@@ -72,12 +73,13 @@ public abstract class Player {
 
 	public Color getColor() {
 		Color newColor;
-		try{
+		try {
 			// We can use reflection to convert the string to a color
-			Field field = Class.forName("java.awt.Color").getField(color.trim());     
-			newColor = (Color)field.get(null); } 
-		catch (Exception e){
-			newColor = null; //Not defined
+			Field field = Class.forName("java.awt.Color")
+					.getField(color.trim());
+			newColor = (Color) field.get(null);
+		} catch (Exception e) {
+			newColor = null; // Not defined
 		}
 
 		return newColor;
@@ -103,39 +105,40 @@ public abstract class Player {
 		hand = new ArrayList<Card>();
 	}
 
-	public Card disproveSuggestion(String person, String room, String weapon){
+	public Card disproveSuggestion(String person, String room, String weapon) {
 		Random rn = new Random();
 		ArrayList<Card> choices = new ArrayList<Card>();
-		for(Card c: hand){
-			if(c.getName().equals(person) || c.getName().equals(room) || c.getName().equals(weapon)){
+		for (Card c : hand) {
+			if (c.getName().equals(person) || c.getName().equals(room)
+					|| c.getName().equals(weapon)) {
 				choices.add(c);
 			}
 		}
-		if(choices.size() != 0){
-			int pick = Math.abs(rn.nextInt())%choices.size();
+		if (choices.size() != 0) {
+			int pick = Math.abs(rn.nextInt()) % choices.size();
 			return choices.get(pick);
 		}
 		return null;
 
 	}
-	
+
 	public abstract void handleTurn(ClueGame game);
-	
-	//public abstract Solution getSuggestion();
+
+	// public abstract Solution getSuggestion();
 
 	public int getNumCards() {
 		return numCards;
 	}
-	
+
 	public void setCurrentPosition(BoardCell boardCell) {
 		currentPosition = boardCell;
 	}
 
-	public void draw(Graphics g, Board board){
+	public void draw(Graphics g, Board board) {
 		g.setColor(getColor());
-		int x = currentPosition.getCol()*LENGTH;
-		int y = currentPosition.getRow()*LENGTH;
-		g.fillOval(x, y,LENGTH ,LENGTH );
+		int x = currentPosition.getCol() * LENGTH;
+		int y = currentPosition.getRow() * LENGTH;
+		g.fillOval(x, y, LENGTH, LENGTH);
 	}
 
 	@Override
@@ -164,11 +167,10 @@ public abstract class Player {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name;
 	}
-
 
 }

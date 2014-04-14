@@ -4,8 +4,8 @@ package clueGame;
 public class BadConfigFormatException extends RuntimeException {
 	private String message = "";
 
-	public BadConfigFormatException(String s){
-		//message is given depending on why the exception is thrown
+	public BadConfigFormatException(String s) {
+		// message is given depending on why the exception is thrown
 		message = s;
 	}
 

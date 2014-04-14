@@ -7,10 +7,9 @@ public enum CardType {
 	CardType(String value) {
 		this.value = value;
 	}
-	public String toString(){
+
+	public String toString() {
 		return value;
 	}
-
-
 
 }

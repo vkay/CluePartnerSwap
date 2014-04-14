@@ -6,15 +6,7 @@ public class HumanPlayer extends Player {
 	public HumanPlayer(String name, String color, BoardCell startingPosition) {
 		super(name, color, startingPosition);
 	}
-	
-/*	public void makeSuggestion(Solution sugg) {
-		suggestion = sugg;
-	}
-	
-	public Solution getSuggestion() {
-		return suggestion;
-	}*/
-	
+
 	@Override
 	public void handleTurn(ClueGame clueGame) {
 		clueGame.setHumanTurnFinished(false);

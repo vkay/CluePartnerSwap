@@ -14,7 +14,7 @@ public class ControlPanel extends JPanel {
 	private ClueGame game;
 	private JButton nextPlayer, makeAccusation;
 
-	public ControlPanel(Player player, final ClueGame game){
+	public ControlPanel(Player player, final ClueGame game) {
 		this.game = game;
 		setLayout(new BorderLayout());
 		whoTurn = new WhoseTurn(game);
@@ -29,17 +29,17 @@ public class ControlPanel extends JPanel {
 		dis = new Display(player);
 		add(dis, BorderLayout.SOUTH);
 	}
-	
+
 	public void setWhoseTurn(String whoseTurn) {
 		whoTurn.setWhoseTurn(whoseTurn);
 	}
-	
+
 	public Display getDisplay() {
 		return dis;
 	}
 
 	class ButtonListener implements ActionListener {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == nextPlayer) {
@@ -47,6 +47,6 @@ public class ControlPanel extends JPanel {
 			} else if (arg0.getSource() == makeAccusation)
 				game.humanAccusation();
 		}
-		 
+
 	}
 }

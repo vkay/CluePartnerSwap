@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,35 +31,44 @@ public class Board extends JPanel {
 	private ArrayList<Player> players;
 	private boolean targetsHighlighted;
 	private ClueGame game;
+	private BoardCell hoveredCell;
 
 	public Board(ClueGame game){
 		this.game = game;
+		hoveredCell = new WalkwayCell();
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character,String>();
 		adjMap = new HashMap<Integer, ArrayList<Integer>>();
 		targetSet = new HashSet<BoardCell>();
 		players = new ArrayList<Player>();
 		addMouseListener(new BoardListener());
+
+		addMouseMotionListener(new BoardMotionListener());
 	}
 	public Board(ArrayList<Player> players, ClueGame game){
 		this.game = game;
+		hoveredCell = new WalkwayCell();
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character,String>();
 		adjMap = new HashMap<Integer, ArrayList<Integer>>();
 		targetSet = new HashSet<BoardCell>();
 		players = new ArrayList<Player>();
 		addMouseListener(new BoardListener());
+		addMouseMotionListener(new BoardMotionListener());
 	}
 	public Board(String c, String l, ClueGame game){
 		this.game = game;
 		csv = c;
 		legend = l;
+		hoveredCell = new WalkwayCell();
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character,String>();
 		adjMap = new HashMap<Integer, ArrayList<Integer>>();
 		targetSet = new HashSet<BoardCell>();
 		players = new ArrayList<Player>();
 		addMouseListener(new BoardListener());
+
+		addMouseMotionListener(new BoardMotionListener());
 	}
 
 	public void loadLegend() throws BadConfigFormatException {
@@ -357,7 +367,10 @@ public class Board extends JPanel {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		for (BoardCell b: cells ){
-			if (targetsHighlighted && targetSet.contains(b)) b.drawHighlighted(g, this);
+			if (targetsHighlighted && targetSet.contains(b)) {
+				if (b.isHovering()) b.drawHovering(g, this);
+				else b.drawHighlighted(g, this);
+			}
 			else b.draw(g, this);
 		}
 		for(Player p : players){
@@ -369,13 +382,13 @@ public class Board extends JPanel {
 		
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			if (game.getPeople().get(game.getWhoseTurn()) instanceof HumanPlayer) {
+			if (game.getPeople()
+					.get(game.getWhoseTurn()) instanceof HumanPlayer) {
 				int x = arg0.getX()/BoardCell.LENGTH;
 				int y = arg0.getY()/BoardCell.LENGTH;
 				if (calcIndex(y,x) >= cells.size()) return;
 				if (getCell(y,x).isHighlighted()) game.moveHuman(y, x);
-				else JOptionPane.showMessageDialog(game, "That target is invalid.",
-		       			"ERROR", JOptionPane.ERROR_MESSAGE);
+				
 			}
 
 		}
@@ -399,6 +412,35 @@ public class Board extends JPanel {
 		public void mouseReleased(MouseEvent arg0) {
 
 		}
+
+	}
+	
+	class BoardMotionListener implements MouseMotionListener {
+
+		@Override
+		public void mouseDragged(MouseEvent arg0) {
+			
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent arg0) {
+			if (game.getPeople().get(game.getWhoseTurn()) instanceof HumanPlayer) {
+				int x = arg0.getX() / BoardCell.LENGTH;
+				int y = arg0.getY() / BoardCell.LENGTH;
+				if (calcIndex(y, x) >= cells.size())
+					return;
+				if (getCell(y, x).isHighlighted()) {
+					hoveredCell.setHovering(false);
+					hoveredCell = getCell(y,x);
+					hoveredCell.setHovering(true);
+					repaint();
+				} else {
+					hoveredCell.setHovering(false);
+					repaint();
+				}
+			}
+		}
+
 	}
 
 }

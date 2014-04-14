@@ -8,7 +8,7 @@ public abstract class BoardCell {
 	private int col;
 	private String init;
 	private char type;
-	private boolean isHighlighted;
+	private boolean isHighlighted, isHovering;
 	public static int LENGTH = 30;
 
 	public BoardCell(){}
@@ -70,11 +70,27 @@ public abstract class BoardCell {
 	public boolean isHighlighted() {
 		return isHighlighted;
 	}
+	
+	public void setHovering(boolean bool) {
+		isHovering = bool;
+	}
+	
+	public boolean isHovering() {
+		return isHovering;
+	}
 
 	abstract public void draw(Graphics g, Board board);
 	
 	public void drawHighlighted(Graphics g, Board board) {
-		g.setColor(Color.CYAN);
+		g.setColor(Color.RED);
+		g.fillRect(getCol()*LENGTH, getRow()*LENGTH, LENGTH, LENGTH);
+		g.setColor(Color.BLACK);
+		g.drawRect(getCol()*LENGTH, getRow()*LENGTH, LENGTH, LENGTH);
+		setHighlighted(true);
+	}
+	
+	public void drawHovering(Graphics g, Board board) {
+		g.setColor(Color.GREEN);
 		g.fillRect(getCol()*LENGTH, getRow()*LENGTH, LENGTH, LENGTH);
 		g.setColor(Color.BLACK);
 		g.drawRect(getCol()*LENGTH, getRow()*LENGTH, LENGTH, LENGTH);

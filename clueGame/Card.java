@@ -3,19 +3,24 @@ package clueGame;
 public class Card {
 	private String myName;
 	private CardType type;
-
+	
 	public Card(String name, CardType type) {
 		super();
 		this.myName = name;
 		this.type = type;
 	}
-	public Card() {}
+
+	public Card() {
+	}
+
 	public String getName() {
 		return myName;
 	}
+
 	public CardType getType() {
 		return type;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

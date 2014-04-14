@@ -25,7 +25,7 @@ public class ClueGame extends JFrame {
 	private String cardLeg = "cardLeg";
 	private String playerLeg = "playerLegend";
 	private Board board;
-	private int countWeap,countPlay,countRoom;
+	private int countWeap, countPlay, countRoom;
 	private Solution solution;
 	private int whoseTurn;
 	private boolean isHumanTurnFinished;
@@ -99,7 +99,8 @@ public class ClueGame extends JFrame {
 		Card pers2 = deck.get(person);
 		Card weap2 = deck.get(weap);
 		Card room2 = deck.get(room);
-		solution = new Solution(room2.getName(), pers2.getName(), weap2.getName());
+		solution = new Solution(room2.getName(), pers2.getName(),
+				weap2.getName());
 		deck.remove(weap2);
 		deck.remove(pers2);
 		deck.remove(room2);
@@ -166,7 +167,7 @@ public class ClueGame extends JFrame {
 			people.get(whoseTurn).handleTurn(this);
 		} else {
 			JOptionPane.showMessageDialog(this,
-					"Current turn is not complete.", "Error!",
+					"Current turn is not complete.", "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		controlPanel.setWhoseTurn(people.get(whoseTurn).getName());
@@ -189,18 +190,18 @@ public class ClueGame extends JFrame {
 	}
 
 	public void humanSuggestion() {
-		new GuessDialog(deck,
-				people.get(humanPlayerIndex).currentPosition, this,
-				people.get(humanPlayerIndex), GuessType.SUGGESTION);
+		new GuessDialog(deck, people.get(humanPlayerIndex).currentPosition,
+				this, people.get(humanPlayerIndex), GuessType.SUGGESTION);
 	}
-	
+
 	public void humanAccusation() {
 		if (getWhoseTurn() == humanPlayerIndex && !isHumanTurnFinished)
-		new GuessDialog(deck,
-				people.get(humanPlayerIndex).currentPosition, this,
-				people.get(humanPlayerIndex), GuessType.ACCUSATION);
-		else JOptionPane.showMessageDialog(this,"It is not your turn!", "ERROR", JOptionPane.ERROR_MESSAGE);
-		
+			new GuessDialog(deck, people.get(humanPlayerIndex).currentPosition,
+					this, people.get(humanPlayerIndex), GuessType.ACCUSATION);
+		else
+			JOptionPane.showMessageDialog(this, "It is not your turn!",
+					"ERROR", JOptionPane.ERROR_MESSAGE);
+
 	}
 
 	public Card handleSuggestion(String person, String room, String weapon,
@@ -223,10 +224,11 @@ public class ClueGame extends JFrame {
 			}
 		}
 		controlPanel.getDisplay().setGuess(
-				person + ", " + room + ", and " + weapon);
-		if (c!= null)
+				person + " in the " + room + " with the " + weapon);
+		if (c != null)
 			controlPanel.getDisplay().setResponse(c.getName());
-		else controlPanel.getDisplay().setResponse("None");
+		else
+			controlPanel.getDisplay().setResponse("None");
 		for (Player p : people) {
 			if (p.getName().equals(person)) {
 				p.setCurrentPosition(accusingPerson.currentPosition);
