@@ -231,7 +231,14 @@ public class ClueGame extends JFrame {
 			controlPanel.getDisplay().setResponse("None");
 		for (Player p : people) {
 			if (p.getName().equals(person)) {
-				p.setCurrentPosition(accusingPerson.currentPosition);
+				BoardCell b;
+				if (accusingPerson.currentPosition instanceof WalkwayCell) {
+					b = new WalkwayCell();
+				} else {
+					b = new RoomCell();
+				}
+				b = accusingPerson.currentPosition;
+				p.setCurrentPosition(b);
 				break;
 			}
 		}
