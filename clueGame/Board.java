@@ -382,6 +382,7 @@ public class Board extends JPanel {
 		
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
+			if (game.getWhoseTurn() == -1) return;
 			if (game.getPeople()
 					.get(game.getWhoseTurn()) instanceof HumanPlayer) {
 				int x = arg0.getX()/BoardCell.LENGTH;
@@ -424,6 +425,7 @@ public class Board extends JPanel {
 
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
+			if (game.getWhoseTurn() == -1) return;
 			if (game.getPeople().get(game.getWhoseTurn()) instanceof HumanPlayer) {
 				int x = arg0.getX() / BoardCell.LENGTH;
 				int y = arg0.getY() / BoardCell.LENGTH;
