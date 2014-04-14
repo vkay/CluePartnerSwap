@@ -1,14 +1,13 @@
 package clueGame;
 
-import java.awt.BorderLayout;
 import java.util.ArrayList;
 
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("serial")
 public class DetectiveNotesGuess extends JPanel{
 	private JComboBox<String> combo;
 

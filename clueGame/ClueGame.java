@@ -16,6 +16,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import clueGame.GuessDialog.GuessType;
+
 @SuppressWarnings("serial")
 public class ClueGame extends JFrame {
 	private static ArrayList<Player> people;
@@ -24,17 +26,14 @@ public class ClueGame extends JFrame {
 	private String cardLeg = "cardLeg";
 	private String playerLeg = "playerLegend";
 	private Board board;
-	private int countWeap = 0;
-	private int countPlay = 0;
-	private int countRoom = 0;
-	private Solution solu;
+	private int countWeap,countPlay,countRoom;
+	private Solution solution;
 	private int whoseTurn;
 	private boolean isHumanTurnFinished;
 	private ControlPanel controlPanel;
 	private int numPlayers;
 	private int humanPlayerIndex;
-	private boolean accusationFlag;
-	
+
 	public ClueGame() throws FileNotFoundException {
 		deck = new ArrayList<Card>();
 		seen = new ArrayList<Card>();
@@ -42,7 +41,7 @@ public class ClueGame extends JFrame {
 		board = new Board("clueLayout1.csv", "cluelegend.txt", this);
 		board.loadConfigFiles();
 		loadConfigFiles();
-		whoseTurn = humanPlayerIndex-1;
+		whoseTurn = humanPlayerIndex - 1;
 		board.setPlayers(people);
 		deal();
 		JMenuBar menuBar = new JMenuBar();
@@ -52,7 +51,7 @@ public class ClueGame extends JFrame {
 		setTitle("ClueGame");
 		add(board, BorderLayout.CENTER);
 		setSize(24 * 35, 24 * 35);
-		controlPanel = new ControlPanel(people.get(whoseTurn+1), this);
+		controlPanel = new ControlPanel(people.get(whoseTurn + 1), this);
 		add(new CardDisplay(people.get(humanPlayerIndex)), BorderLayout.EAST);
 		add(controlPanel, BorderLayout.SOUTH);
 		isHumanTurnFinished = true;
@@ -102,7 +101,7 @@ public class ClueGame extends JFrame {
 		Card pers2 = deck.get(person);
 		Card weap2 = deck.get(weap);
 		Card room2 = deck.get(room);
-		solu = new Solution(room2.getName(), pers2.getName(), weap2.getName());
+		solution = new Solution(room2.getName(), pers2.getName(), weap2.getName());
 		deck.remove(weap2);
 		deck.remove(pers2);
 		deck.remove(room2);
@@ -141,12 +140,12 @@ public class ClueGame extends JFrame {
 		humanPlayerIndex = (new Random()).nextInt(numPlayers);
 		for (int count = 0; in2.hasNextLine(); count++) {
 			in2.nextLine();
-			
+
 			String playerName = in2.nextLine();
 			String playerColor = in2.nextLine();
 			int x = in2.nextInt();
 			int y = in2.nextInt();
-			
+
 			if (count == humanPlayerIndex) {
 				people.add(new HumanPlayer(playerName, playerColor, board
 						.getCell(x, y)));
@@ -154,7 +153,7 @@ public class ClueGame extends JFrame {
 				people.add(new ComputerPlayer(playerName, playerColor, board
 						.getCell(x, y)));
 			}
-			
+
 		}
 		in2.close();
 
@@ -162,38 +161,52 @@ public class ClueGame extends JFrame {
 
 	public void nextPlayer() {
 		if (isHumanTurnFinished) {
-			if (whoseTurn == people.size() - 1) whoseTurn = 0;
-			else whoseTurn++;
+			if (whoseTurn == people.size() - 1)
+				whoseTurn = 0;
+			else
+				whoseTurn++;
 			people.get(whoseTurn).handleTurn(this);
-			/*handleSuggestion(people.get(whoseTurn).getSuggestion().getPerson(), people.get(whoseTurn).getSuggestion().getRoom(), 
-					people.get(whoseTurn).getSuggestion().getWeapon(), people.get(whoseTurn));*/
 		} else {
-			JOptionPane.showMessageDialog(this, "Current turn is not complete.", "Error!", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this,
+					"Current turn is not complete.", "Error!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 		controlPanel.setWhoseTurn(people.get(whoseTurn).getName());
 		controlPanel.getDisplay().setRoll(people.get(whoseTurn).getRoll());
 	}
-	
-	public void setHumanTurnFinished (boolean isTurnFinished) {
+
+	public void setHumanTurnFinished(boolean isTurnFinished) {
 		isHumanTurnFinished = isTurnFinished;
 	}
-	
+
 	public void moveHuman(int row, int col) {
-		((HumanPlayer) people.get(humanPlayerIndex)).makeMove(this, board, row, col);
+		((HumanPlayer) people.get(humanPlayerIndex)).makeMove(this, board, row,
+				col);
 		board.setHighlighted(false);
 		isHumanTurnFinished = true;
 	}
-	
+
 	public String turn() {
 		return people.get(whoseTurn).getName();
 	}
-	
+
 	public void humanSuggestion() {
-		SuggestionDialog suggestion = new SuggestionDialog(deck, people.get(humanPlayerIndex).currentPosition, this, people.get(humanPlayerIndex));
+		new GuessDialog(deck,
+				people.get(humanPlayerIndex).currentPosition, this,
+				people.get(humanPlayerIndex), GuessType.SUGGESTION);
+	}
+	
+	public void humanAccusation() {
+		if (getWhoseTurn() == humanPlayerIndex && !isHumanTurnFinished)
+		new GuessDialog(deck,
+				people.get(humanPlayerIndex).currentPosition, this,
+				people.get(humanPlayerIndex), GuessType.ACCUSATION);
+		else JOptionPane.showMessageDialog(this,"It is not your turn!", "ERROR", JOptionPane.ERROR_MESSAGE);
 		
 	}
 
-	public Card handleSuggestion(String person, String room, String weapon, Player accusingPerson) {
+	public Card handleSuggestion(String person, String room, String weapon,
+			Player accusingPerson) {
 		int index = 0;
 		Card c = null;
 
@@ -211,32 +224,25 @@ public class ClueGame extends JFrame {
 				break;
 			}
 		}
-		/*if (c == null) {
-			accusationFlag = true;
-			setSuggAsAccu(new Solution(person, room, weapon), people.get(whoseTurn));
-			System.out.println(people.get(whoseTurn).getAccusation());
-		} else {
-			accusationFlag = false;
-		}*/
-		
-		controlPanel.getDisplay().setGuess(person + ", " + room + ", and " + weapon);
+		controlPanel.getDisplay().setGuess(
+				person + ", " + room + ", and " + weapon);
 		controlPanel.getDisplay().setResponse(c.getName());
+		for (Player p : people) {
+			if (p.getName().equals(person)) {
+				p.setCurrentPosition(accusingPerson.currentPosition);
+				break;
+			}
+		}
 		return c;
 
 	}
-	
-	/*public void setSuggAsAccu(Solution suggestion, Player accusingPerson) {
-		if(accusationFlag) {
-			accusingPerson.setAccusation(suggestion);
-		}
-	}*/
 
 	public boolean checkAccusation(Solution accusation) {
-		return accusation.equals(solu);
+		return accusation.equals(solution);
 	}
 
 	public void setSolu(Solution solu) {
-		this.solu = solu;
+		this.solution = solu;
 	}
 
 	public ArrayList<Player> playerList() {
@@ -262,11 +268,11 @@ public class ClueGame extends JFrame {
 	public int countRoom() {
 		return countRoom;
 	}
-	
+
 	public ArrayList<Player> getPeople() {
 		return people;
 	}
-	
+
 	public int getWhoseTurn() {
 		return whoseTurn;
 	}
@@ -275,7 +281,8 @@ public class ClueGame extends JFrame {
 		ClueGame game = new ClueGame();
 		game.setVisible(true);
 		JOptionPane.showMessageDialog(new JFrame(),
-				"You are " + people.get(game.humanPlayerIndex) +", press Next Player to begin play.",
+				"You are " + people.get(game.humanPlayerIndex)
+						+ ", press Next Player to begin play.",
 				"Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 
 	}

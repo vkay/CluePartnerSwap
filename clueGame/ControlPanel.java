@@ -11,20 +11,19 @@ import javax.swing.JPanel;
 public class ControlPanel extends JPanel {
 	private WhoseTurn whoTurn;
 	private Display dis;
+	private ClueGame game;
+	private JButton nextPlayer, makeAccusation;
 
-	public ControlPanel(Player player, final ClueGame clueGame){
+	public ControlPanel(Player player, final ClueGame game){
+		this.game = game;
 		setLayout(new BorderLayout());
-		whoTurn = new WhoseTurn(clueGame);
+		whoTurn = new WhoseTurn(game);
 		add(whoTurn, BorderLayout.WEST);
-		final JButton nextPlayer = new JButton("Next Player");
-		nextPlayer.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == nextPlayer) {
-					clueGame.nextPlayer();
-				}
-			}
-		});
-		JButton makeAccusation = new JButton("Make an accusation");
+		nextPlayer = new JButton("Next Player");
+		nextPlayer.addActionListener(new ButtonListener());
+		makeAccusation = new JButton("Make an accusation");
+		makeAccusation.addActionListener(new ButtonListener());
+
 		add(nextPlayer, BorderLayout.CENTER);
 		add(makeAccusation, BorderLayout.EAST);
 		dis = new Display(player);
@@ -39,5 +38,15 @@ public class ControlPanel extends JPanel {
 		return dis;
 	}
 
-
+	class ButtonListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if (arg0.getSource() == nextPlayer) {
+				game.nextPlayer();
+			} else if (arg0.getSource() == makeAccusation)
+				game.humanAccusation();
+		}
+		 
+	}
 }

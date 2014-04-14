@@ -5,8 +5,8 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Display extends JPanel {
-	private int roll;
 	private DieDisplay dieDis;
 	private GuessDis guessDis;
 	private ResultDis resDis;

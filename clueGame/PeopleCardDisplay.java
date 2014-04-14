@@ -1,13 +1,11 @@
 package clueGame;
 
-import java.util.ArrayList;
-
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("serial")
 public class PeopleCardDisplay extends JPanel{
 	private JTextArea people;
 

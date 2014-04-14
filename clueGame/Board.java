@@ -83,10 +83,12 @@ public class Board extends JPanel {
 				value = str[1];
 				rooms.put(key, value);
 			}
+			
 		} catch (Exception e) {
 			if (e instanceof FileNotFoundException) System.out.println("Cannot find file: " + legend);
 			else System.out.println("Cannot input from file: " + legend);
 		}
+		
 	}
 
 	public void loadLayout() throws BadConfigFormatException {
@@ -178,8 +180,6 @@ public class Board extends JPanel {
 			numRows = row + 1;	
 		} catch (FileNotFoundException e) {
 			System.out.println("Cannot find file: " + csv);
-		} catch (IOException e) {
-			System.out.println("Cannot input from file: " + csv);
 		}
 	}
 
@@ -370,25 +370,21 @@ public class Board extends JPanel {
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 
 		}
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 
 		}
 	}

@@ -1,11 +1,9 @@
 package clueGame;
 
 import java.awt.GridLayout;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JDialog;
-import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class DetectiveNotesDialog extends JDialog {

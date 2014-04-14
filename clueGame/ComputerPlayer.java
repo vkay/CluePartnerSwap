@@ -8,6 +8,7 @@ import java.util.Set;
 public class ComputerPlayer extends Player {
 	private char lastRoomVisited = ' ';
 	private Solution suggestion;
+	private ArrayList<Card> seen;
 
 	public BoardCell pickLocation(Set<BoardCell> targets){
 		BoardCell b = null;
@@ -59,30 +60,34 @@ public class ComputerPlayer extends Player {
 		accusedWeap = weapChoices.get( Math.abs( rn.nextInt() ) % weapChoices.size() ).getName();
 		suggestion = new Solution(accusedRoom, accusedName, accusedWeap);
 		return suggestion;
-		//return new Solution( accusedRoom,accusedName ,accusedWeap);
 	}
 	
-	/*public Solution getSuggestion() {
-		return suggestion;
-	}*/
 	public void updateSeen(Card seen){
-
+		this.seen.add(seen);
 	}
+	
+	
 	public ComputerPlayer(String name, String color, BoardCell startingPosition) {
 		super(name, color, startingPosition);
+		seen = new ArrayList<Card>();
 	}
 	
 	@Override
 	public void handleTurn(ClueGame clueGame) {
 		roll();
-		clueGame.getBoard().calcAdjacencies(currentPosition.getRow(), currentPosition.getCol());
-		clueGame.getBoard().calcTargets(currentPosition.getRow(), currentPosition.getCol(), getRoll());
-		setCurrentPosition(pickLocation(clueGame.getBoard().getTargets()));
-		clueGame.getBoard().repaint();
-		if(currentPosition.isRoom()) {
-			System.out.println("hello");
-			createdSuggestion(clueGame.getDeck(), clueGame.getSeen(), clueGame.getBoard().getRooms());
-			clueGame.handleSuggestion(suggestion.getPerson(), suggestion.getRoom(), suggestion.getWeapon(), clueGame.getPeople().get(clueGame.getWhoseTurn()));
+		Board board = clueGame.getBoard();
+		int row = currentPosition.getRow();
+		int col = currentPosition.getCol();
+		board.calcAdjacencies(row, col);
+		board.calcTargets(row, col, getRoll());
+		setCurrentPosition(pickLocation(board.getTargets()));
+		board.repaint();
+		if (currentPosition.isRoom()) {
+			createdSuggestion(clueGame.getDeck(), clueGame.getSeen(),
+					board.getRooms());
+			clueGame.handleSuggestion(suggestion.getPerson(), suggestion
+					.getRoom(), suggestion.getWeapon(), clueGame.getPeople()
+					.get(clueGame.getWhoseTurn()));
 		}
 	}
 
