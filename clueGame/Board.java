@@ -240,42 +240,54 @@ public class Board extends JPanel {
 		ArrayList<Integer> arr = new ArrayList<Integer>();
 		int index = calcIndex(row, col);
 
-		if(getCell(row, col).getInit().equals("W")){
-			if (row + 1  < numRows){
-				if((getCell(row+1, col).getInit().equals("W")) || (getRoomCell(calcIndex(row+1, col))).getDoorDirection() == RoomCell.DoorDirection.UP){
+		if (getCell(row, col).getInit().equals("W")) {
+			if (row + 1 < numRows) {
+				if ((getCell(row + 1, col).getInit().equals("W"))
+						|| (getRoomCell(calcIndex(row + 1, col)))
+								.getDoorDirection() == RoomCell.DoorDirection.UP) {
 					arr.add(calcIndex(row + 1, col));
 				}
 			}
-			if (row - 1 >= 0){
-				if((getCell(row-1, col).getInit().equals("W")) || (getRoomCell(calcIndex(row-1, col))).getDoorDirection() == RoomCell.DoorDirection.DOWN){
+			if (row - 1 >= 0) {
+				if ((getCell(row - 1, col).getInit().equals("W"))
+						|| (getRoomCell(calcIndex(row - 1, col)))
+								.getDoorDirection() == RoomCell.DoorDirection.DOWN) {
 					arr.add(calcIndex(row - 1, col));
 				}
 			}
-			if (col + 1 < numColumns){
-				if((getCell(row, col+1).getInit().equals("W")) || (getRoomCell(calcIndex(row, col+1))).getDoorDirection() == RoomCell.DoorDirection.LEFT){
+			if (col + 1 < numColumns) {
+				if ((getCell(row, col + 1).getInit().equals("W"))
+						|| (getRoomCell(calcIndex(row, col + 1)))
+								.getDoorDirection() == RoomCell.DoorDirection.LEFT) {
 					arr.add(calcIndex(row, col + 1));
 				}
 			}
-			if (col - 1 >= 0){
-				if((getCell(row, col-1).getInit().equals("W")) || (getRoomCell(calcIndex(row, col-1))).getDoorDirection() == RoomCell.DoorDirection.RIGHT){
+			if (col - 1 >= 0) {
+				if ((getCell(row, col - 1).getInit().equals("W"))
+						|| (getRoomCell(calcIndex(row, col - 1)))
+								.getDoorDirection() == RoomCell.DoorDirection.RIGHT) {
 					arr.add(calcIndex(row, col - 1));
 				}
-			}			
+			}
 		}
-		if(getRoomCell(calcIndex(row, col)).isDoorway()){
-
-			 if(getRoomCell(calcIndex(row, col)).getDoorDirection() == RoomCell.DoorDirection.DOWN){
+		RoomCell roomCell = getRoomCell(calcIndex(row,col));
+		if (roomCell.isDoorway()) {
+			switch (roomCell.getDoorDirection()) {
+				case DOWN:
 					arr.add(calcIndex(row+1, col));
-			 }
-			 if(getRoomCell(calcIndex(row, col)).getDoorDirection() == RoomCell.DoorDirection.UP){
+					break;
+				case UP:
 					arr.add(calcIndex(row-1, col));
-			 }
-			 if(getRoomCell(calcIndex(row, col)).getDoorDirection() == RoomCell.DoorDirection.RIGHT){
+					break;
+				case RIGHT:
 					arr.add(calcIndex(row, col+1));
-			 }
-			 if(getRoomCell(calcIndex(row, col)).getDoorDirection() == RoomCell.DoorDirection.LEFT){
+					break;
+				case LEFT:
 					arr.add(calcIndex(row, col-1));
-			 }
+					break;
+				default:
+					break;
+			}
 		}
 		adjMap.put(index, arr);
 	}

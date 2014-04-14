@@ -98,8 +98,13 @@ public class ComputerPlayer extends Player {
 		if (unseen.size() == 3) {
 			boolean isCorrect;
 			isCorrect = clueGame.checkAccusation(makeAccusation());
-			if (isCorrect) JOptionPane.showMessageDialog(clueGame, getName() + " wins!", "Winner!", JOptionPane.INFORMATION_MESSAGE);
-			else JOptionPane.showMessageDialog(clueGame, getName() + "'s guess was incorrect.", "Incorrect", JOptionPane.INFORMATION_MESSAGE);
+			if (isCorrect)
+				JOptionPane.showMessageDialog(clueGame, getName() + " wins!",
+						"Winner!", JOptionPane.INFORMATION_MESSAGE);
+			else
+				JOptionPane.showMessageDialog(clueGame, getName()
+						+ "'s guess was incorrect.", "Incorrect",
+						JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			Board board = clueGame.getBoard();
 			int row = currentPosition.getRow();
