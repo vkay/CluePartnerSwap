@@ -45,7 +45,6 @@ public class Solution {
 	}
 
 	public Solution(String room, String person, String weapon) {
-		super();
 		this.person = person;
 		this.weapon = weapon;
 		this.room = room;

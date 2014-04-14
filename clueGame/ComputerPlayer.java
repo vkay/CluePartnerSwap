@@ -5,10 +5,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 public class ComputerPlayer extends Player {
 	private char lastRoomVisited = ' ';
 	private Solution suggestion;
-	private ArrayList<Card> seen;
+	private ArrayList<Card> unseen;
 
 	public BoardCell pickLocation(Set<BoardCell> targets){
 		BoardCell b = null;
@@ -40,17 +42,17 @@ public class ComputerPlayer extends Player {
 	public void setLastRoomVisited(char lastRoomVisited) {
 		this.lastRoomVisited = lastRoomVisited;
 	}
-	public Solution createdSuggestion(ArrayList<Card> deck, ArrayList<Card> seen, Map<Character,String> key){
+	public Solution createSuggestion(ArrayList<Card> deck, ArrayList<Card> unseen, Map<Character,String> key){
 		String accusedName="";
 		String accusedWeap="";
 		String accusedRoom=key.get(currentPosition.getType());
 		ArrayList<Card> playerChoices = new ArrayList<Card>();
 		ArrayList<Card> weapChoices = new ArrayList<Card>();
 		for(Card c: deck){
-			if(!seen.contains(c)&&!hand.contains(c)){
+			if(unseen.contains(c)&&!hand.contains(c)){
 				if(c.getType() == CardType.PLAYER){
 					playerChoices.add(c);
-				}else if(c.getType() == CardType.WEAPON){
+				} else if(c.getType() == CardType.WEAPON){
 					weapChoices.add(c);
 				}
 			}
@@ -62,32 +64,58 @@ public class ComputerPlayer extends Player {
 		return suggestion;
 	}
 	
-	public void updateSeen(Card seen){
-		this.seen.add(seen);
+	public Solution makeAccusation() {
+		String player = "", room = "", weapon = "";
+		for (Card c : unseen) {
+			switch (c.getType()) {
+				case PLAYER:
+					player = c.getName();
+					break;
+				case WEAPON:
+					weapon = c.getName();
+					break;
+				case ROOM: 
+					room = c.getName();
+					break;
+			}
+		}
+		
+		return new Solution(room, player, weapon);
 	}
 	
+	public void updateSeen(Card seen){
+		this.unseen.remove(seen);
+	}
 	
-	public ComputerPlayer(String name, String color, BoardCell startingPosition) {
+	public ComputerPlayer(String name, String color, BoardCell startingPosition, ArrayList<Card> deck) {
 		super(name, color, startingPosition);
-		seen = new ArrayList<Card>();
+		unseen = new ArrayList<Card>(deck);
 	}
 	
 	@Override
 	public void handleTurn(ClueGame clueGame) {
 		roll();
-		Board board = clueGame.getBoard();
-		int row = currentPosition.getRow();
-		int col = currentPosition.getCol();
-		board.calcAdjacencies(row, col);
-		board.calcTargets(row, col, getRoll());
-		setCurrentPosition(pickLocation(board.getTargets()));
-		board.repaint();
-		if (currentPosition.isRoom()) {
-			createdSuggestion(clueGame.getDeck(), clueGame.getSeen(),
-					board.getRooms());
-			clueGame.handleSuggestion(suggestion.getPerson(), suggestion
-					.getRoom(), suggestion.getWeapon(), clueGame.getPeople()
-					.get(clueGame.getWhoseTurn()));
+		if (unseen.size() == 3) {
+			boolean isCorrect;
+			isCorrect = clueGame.checkAccusation(makeAccusation());
+			if (isCorrect) JOptionPane.showMessageDialog(clueGame, getName() + " wins!", "Winner!", JOptionPane.INFORMATION_MESSAGE);
+			else JOptionPane.showMessageDialog(clueGame, getName() + "'s guess was incorrect.", "Incorrect", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			Board board = clueGame.getBoard();
+			int row = currentPosition.getRow();
+			int col = currentPosition.getCol();
+
+			board.calcAdjacencies(row, col);
+			board.calcTargets(row, col, getRoll());
+			setCurrentPosition(pickLocation(board.getTargets()));
+			board.repaint();
+			if (currentPosition.isRoom()) {
+				createSuggestion(clueGame.getDeck(), unseen,
+						board.getRooms());
+				clueGame.handleSuggestion(suggestion.getPerson(), suggestion
+						.getRoom(), suggestion.getWeapon(), clueGame
+						.getPeople().get(clueGame.getWhoseTurn()));
+			}
 		}
 	}
 

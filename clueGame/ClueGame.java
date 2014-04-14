@@ -22,7 +22,6 @@ import clueGame.GuessDialog.GuessType;
 public class ClueGame extends JFrame {
 	private static ArrayList<Player> people;
 	private ArrayList<Card> deck;
-	private ArrayList<Card> seen;
 	private String cardLeg = "cardLeg";
 	private String playerLeg = "playerLegend";
 	private Board board;
@@ -36,7 +35,6 @@ public class ClueGame extends JFrame {
 
 	public ClueGame() throws FileNotFoundException {
 		deck = new ArrayList<Card>();
-		seen = new ArrayList<Card>();
 		people = new ArrayList<Player>();
 		board = new Board("clueLayout1.csv", "cluelegend.txt", this);
 		board.loadConfigFiles();
@@ -151,7 +149,7 @@ public class ClueGame extends JFrame {
 						.getCell(x, y)));
 			} else {
 				people.add(new ComputerPlayer(playerName, playerColor, board
-						.getCell(x, y)));
+						.getCell(x, y), deck));
 			}
 
 		}
@@ -226,13 +224,16 @@ public class ClueGame extends JFrame {
 		}
 		controlPanel.getDisplay().setGuess(
 				person + ", " + room + ", and " + weapon);
-		controlPanel.getDisplay().setResponse(c.getName());
+		if (c!= null)
+			controlPanel.getDisplay().setResponse(c.getName());
+		else controlPanel.getDisplay().setResponse("None");
 		for (Player p : people) {
 			if (p.getName().equals(person)) {
 				p.setCurrentPosition(accusingPerson.currentPosition);
 				break;
 			}
 		}
+		board.repaint();
 		return c;
 
 	}
@@ -241,8 +242,8 @@ public class ClueGame extends JFrame {
 		return accusation.equals(solution);
 	}
 
-	public void setSolu(Solution solu) {
-		this.solution = solu;
+	public void setSolu(Solution solution) {
+		this.solution = solution;
 	}
 
 	public ArrayList<Player> playerList() {
@@ -251,10 +252,6 @@ public class ClueGame extends JFrame {
 
 	public ArrayList<Card> getDeck() {
 		return deck;
-	}
-
-	public ArrayList<Card> getSeen() {
-		return seen;
 	}
 
 	public int countWeap() {

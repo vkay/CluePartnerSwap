@@ -14,15 +14,6 @@ public abstract class Player {
 	protected ArrayList<Card> hand;
 	public static int LENGTH = 30;
 	private int roll;
-	//private Solution accusation;
-
-	/*public Solution getAccusation() {
-		return accusation;
-	}
-
-	public void setAccusation(Solution accusation) {
-		this.accusation = accusation;
-	}*/
 
 	public ArrayList<Card> getHand() {
 		return hand;
